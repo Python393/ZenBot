@@ -1,3 +1,4 @@
+#
 import discord
 import os
 import requests
@@ -23,6 +24,16 @@ def get_quote():
   quote = "**" + json_data[0]['q'] + "** *-" + json_data[0]['a'] + "*"
   return(quote)
 
+def get_puppy():
+  response = requests.get("https://dog.ceo/api/breeds/image/random")
+  embed_data = json.loads(response.text)
+  string=embedpic = embed_data['message']
+  e = discord.Embed(title= 'Doggo Picture')
+  e.set_image(url=embedpic)
+  e.set_footer(text= "This is what you wanted 😃")
+  return(e)
+
+
 
 @client.event
 async def on_message(message):
@@ -35,6 +46,10 @@ async def on_message(message):
     quote = get_quote()
     quote_text = '**__Quote:__**\n> {}'.format(quote)
     await message.channel.send(quote_text)
+
+  if msg.startswith('!zen doggo'):
+    embed = get_puppy()
+    await message.channel.send(embed=embed)
   
   if msg.startswith('!zen info'):
     formattext = '**ℹ  __Info__  ℹ**\n \n ⏳ __*Date of start:*__ `2021 march 21st`\n 😊 __*Made with:*__ \n \n **Love, Replit and UptimeRobot**'
@@ -45,7 +60,7 @@ async def on_message(message):
     await message.channel.send('>>> {}'.format(invitetext))
 
   if msg.startswith("!zen help"):
-    helptext = '__**Commands:**__ \n 🌸 `!zen inspire` ** - sends an inspirational quote. ** \n ℹ `!zen info` ** - shows the info of the bot. ** \n ✉ `!zen invite` ** - sends an invite for the bot. ** \n 💝`!zen gift` ** - gifts love to someone you tag. ** \n 👤 `!zen better` ** - helps you become a better person. **'
+    helptext = '__**Commands:**__ \n 🌸 `!zen inspire` ** - sends an inspirational quote. ** \n ℹ `!zen info` ** - shows the info of the bot. ** \n ✉ `!zen invite` ** - sends an invite for the bot. ** \n 💝`!zen gift` ** - gifts love to someone you tag. ** \n 👤 `!zen better` ** - helps you become a better person. ** \n 🐶 `!zen doggo` ** -picture of cute doggos. **'
     await message.channel.send('>>> {}'.format(helptext))
   
   if msg.startswith("!zen gift"):
@@ -62,3 +77,4 @@ async def on_message(message):
 
 keep_alive()
 client.run(os.getenv('TOKEN'))
+#
