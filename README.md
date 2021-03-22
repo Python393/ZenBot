@@ -5,3 +5,4 @@ Commands:
 !zen inspire
 !zen invite
 !zen info
+!zen gift
