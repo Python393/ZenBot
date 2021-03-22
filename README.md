@@ -6,3 +6,5 @@ Commands:
 !zen invite
 !zen info
 !zen gift
+!zen doggo
+!zen encourage
