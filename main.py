@@ -3,8 +3,12 @@ import os
 import requests
 import json
 from serverping import keep_alive
+import random
 
 client = discord.Client()
+
+#bbp source: https://www.inc.com/john-rampton/15-ways-to-become-a-better-person.html
+bpchoices = ['Compliment Yourself!', 'Dont Make Excuses!', 'Let Go Of Anger!', 'Practice Forgiveness!', 'Be Honest And Direct!', 'Be Helpful!', 'Listen To Others!', 'Act Locally!', 'Always Be Polite!', 'Be Yourself!', 'Be Open To Change!', 'Be Respectful!', 'Dont Show Up Empty-Handed!', 'Educate Yourself!', 'Suprise People!']
 
 @client.event
 async def on_ready():
@@ -33,7 +37,7 @@ async def on_message(message):
     await message.channel.send(quote_text)
   
   if msg.startswith('!zen info'):
-    formattext = '**ℹ__  Info  __ℹ**\n \n ⏳ __*Date of start:*__ `**2021 march 21st**`\n 😊 __*Made with:*__ \n \n **Love, Replit and UptimeRobot**'
+    formattext = '**ℹ  __Info__  ℹ**\n \n ⏳ __*Date of start:*__ `2021 march 21st`\n 😊 __*Made with:*__ \n \n **Love, Replit and UptimeRobot**'
     await message.channel.send('>>> {}'.format(formattext))
 
   if msg.startswith('!zen invite'):
@@ -41,7 +45,7 @@ async def on_message(message):
     await message.channel.send('>>> {}'.format(invitetext))
 
   if msg.startswith("!zen help"):
-    helptext = '__**Commands:**__ \n 🌸 `!zen inspire` ** - sends an inspirational quote. ** \n ℹ `!zen info` ** - shows the info of the bot. ** \n ✉ `!zen invite` ** - sends an invite for the bot. ** \n 💝`!zen gift` ** - gifts love to someone you tag. **'
+    helptext = '__**Commands:**__ \n 🌸 `!zen inspire` ** - sends an inspirational quote. ** \n ℹ `!zen info` ** - shows the info of the bot. ** \n ✉ `!zen invite` ** - sends an invite for the bot. ** \n 💝`!zen gift` ** - gifts love to someone you tag. ** \n 👤 `!zen better` ** - helps you become a better person. **'
     await message.channel.send('>>> {}'.format(helptext))
   
   if msg.startswith("!zen gift"):
@@ -50,6 +54,9 @@ async def on_message(message):
       return
     gifttext = "Someone 💝 __**loves**__ 💝 you, " + msg.split("!zen gift ",1)[1]
     await message.channel.send('>>> {}'.format(gifttext))
+
+  if msg.startswith("!zen better"): 
+    await message.channel.send('>>> 🌺 **-** ' + random.choice(bpchoices) + ' **-** 🌺 ')
 
 
 
