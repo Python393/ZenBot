@@ -8,18 +8,16 @@ client = discord.Client()
 
 @client.event
 async def on_ready():
-  print('We have logged in as {0.user}'.format(client))
+  print('Bot is online on {0.user}'.format(client))
   game = discord.Game("!zen help")
   await client.change_presence(status=discord.Status.idle, activity=game)
-
-
+  
 
 def get_quote():
   response = requests.get("https://zenquotes.io/api/random")
   json_data = json.loads(response.text)
   quote = "**" + json_data[0]['q'] + "** *-" + json_data[0]['a'] + "*"
   return(quote)
-
 
 
 @client.event
@@ -46,6 +44,14 @@ async def on_message(message):
     helptext = '__**Commands:**__ \n 🌸 `!zen inspire` ** - sends an inspirational quote. ** \n ℹ `!zen info` ** - shows the info of the bot. ** \n ✉ `!zen invite` ** - sends an invite for the bot. **'
     await message.channel.send('>>> {}'.format(helptext))
   
+  if msg.startswith("!zen gift"):
+    if(msg.split("!zen gift",1)[1] == ""):
+      await message.channel.send('>>> Specify a 👤 **__person__** 👤 to gift something!')
+      return
+    gifttext = "Someone 💝 __**loves**__ 💝 you, " + msg.split("!zen gift ",1)[1]
+    await message.channel.send('>>> {}'.format(gifttext))
+
+
 
 keep_alive()
 client.run(os.getenv('TOKEN'))
