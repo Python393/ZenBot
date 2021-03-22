@@ -41,7 +41,7 @@ async def on_message(message):
     await message.channel.send('>>> {}'.format(invitetext))
 
   if msg.startswith("!zen help"):
-    helptext = '__**Commands:**__ \n 🌸 `!zen inspire` ** - sends an inspirational quote. ** \n ℹ `!zen info` ** - shows the info of the bot. ** \n ✉ `!zen invite` ** - sends an invite for the bot. **'
+    helptext = '__**Commands:**__ \n 🌸 `!zen inspire` ** - sends an inspirational quote. ** \n ℹ `!zen info` ** - shows the info of the bot. ** \n ✉ `!zen invite` ** - sends an invite for the bot. ** \n 💝`!zen gift` ** - gifts love to someone you tag. **'
     await message.channel.send('>>> {}'.format(helptext))
   
   if msg.startswith("!zen gift"):
