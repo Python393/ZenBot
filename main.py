@@ -31,12 +31,20 @@ encouragements = [
   'You are so kind'
 ]
 
+headers = {
+    'x-rapidapi-key': "dad-jokes.p.rapidapi.com",
+    'x-rapidapi-host': "x-rapidapi-key"
+    }
+
+
+
 @client.event
 async def on_ready():
   print('Bot is online on {0.user}'.format(client))
   game = discord.Game("!zen help")
   await client.change_presence(status=discord.Status.idle, activity=game)
-  
+
+url = "https://dad-jokes.p.rapidapi.com/random/joke"
 
 def get_quote():
   response = requests.get("https://zenquotes.io/api/random")
@@ -59,16 +67,18 @@ def get_puppy():
 async def on_message(message):
   if message.author == client.user:
     return
+  if message.author.bot:
+    return
 
   msg = message.content
-  
 
+
+  
   #INSPIRE CMD
   if msg.startswith('!zen inspire'):
     quote = get_quote()
     quote_text = '**__Quote:__**\n> {}'.format(quote)
     await message.channel.send(quote_text)
-
 
   #DOGPIC CMD
   if msg.startswith('!zen doggo'):
@@ -78,7 +88,7 @@ async def on_message(message):
 
   #BOTINFO CMD
   if msg.startswith('!zen info'):
-    formattext = '**ℹ  __Info__  ℹ**\n \n ⏳ __*Date of start:*__ `2021 march 21st`\n 😊 __*Made with:*__ \n \n **Love, Replit and UptimeRobot \n __Lines of code: 98.__**'
+    formattext = '**ℹ  __Info__  ℹ**\n \n ⏳ __*Date of start:*__ `2021 march 21st`\n 😊 __*Made with:*__ \n \n **Love, Replit and UptimeRobot \n __Lines of code: 143.__**'
     await message.channel.send('>>> {}'.format(formattext))
 
 
@@ -112,6 +122,20 @@ async def on_message(message):
   #ENCOURAGE CMD
   if msg.startswith("!zen encourage"):
     await message.channel.send('>>> ❤ **-  ' + random.choice(encouragements) + '  -** ❤')
+
+
+  #MEME CMD
+  if msg.startswith("!zen meme"):
+    response = requests.get(url, headers=headers)
+    r= response.text
+    await message.channel.send(r)
+    #await message.channel.send(f">>> **{r['setup']}**\n||{r['punchline']}||")
+
+
+  #COINFLIP CMD
+  if msg.startswith("!zen coinflip"):
+    outcomes = ['Tails', 'Heads']
+    await message.channel.send(f"> You got **{random.choice(outcomes)}**.")
 
 
 #BOTONTIME
