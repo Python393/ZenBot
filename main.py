@@ -6,7 +6,6 @@ from serverping import keep_alive
 import random
 
 
-
 client = discord.Client()
 
 
@@ -31,20 +30,14 @@ encouragements = [
   'You are so kind'
 ]
 
-headers = {
-    'x-rapidapi-key': "dad-jokes.p.rapidapi.com",
-    'x-rapidapi-host': "x-rapidapi-key"
-    }
-
+badwords = ['fuck', 'shit', 'fag', 'piss', 'dick', 'ass', 'bitch', 'bastard', 'nigga', 'nigger']
 
 
 @client.event
 async def on_ready():
   print('Bot is online on {0.user}'.format(client))
-  game = discord.Game("!zen help")
+  game = discord.Game(f" on {len(client.guilds)} servers! | !zen help")
   await client.change_presence(status=discord.Status.idle, activity=game)
-
-url = "https://dad-jokes.p.rapidapi.com/random/joke"
 
 def get_quote():
   response = requests.get("https://zenquotes.io/api/random")
@@ -63,15 +56,35 @@ def get_puppy():
 
 
 
+
 @client.event
 async def on_message(message):
   if message.author == client.user:
     return
   if message.author.bot:
     return
+  if message.content.startswith('!zen list'):
+    servers = list(client.guilds)
+    await message.channel.send(f"Connected on {str(len(servers))} servers:")
+    await message.channel.send('\n' .join(guild.name for guild in client.guilds))
+
+  if message.content.startswith('!zen ping'):
+      if round(client.latency * 1000) <= 50:
+        embed=discord.Embed(title="Pong", description=f":ping_pong: Pingpingpingpingping!\n My Latency Is {round(client.latency *1000)} Milliseconds!", color= 474747)
+      elif round(client.latency * 1000) <= 100:
+        embed=discord.Embed(title="Pong", description=f":ping_pong: Pingpingpingpingping!\n My Latency Is {round(client.latency *1000)} Milliseconds!", color= 474747)
+      elif round(client.latency * 1000) <= 200:
+        embed=discord.Embed(title="Pong", description=f":ping_pong: Pingpingpingpingping!\n My Latency Is {round(client.latency *1000)} Milliseconds!", color= 474747)
+      else:
+        embed=discord.Embed(title="Pong", description=f":ping_pong: Pingpingpingpingping!\n My Latency Is {round(client.latency *1000)} Milliseconds!", color= 474747)
+      await message.channel.send(embed=embed)
+
+  
+  if any(bad_word in message.content.strip().lower() for bad_word in badwords):
+           await message.delete()
+           await message.channel.send(f'>>> {message.author} , Please dont swear.')
 
   msg = message.content
-
 
   
   #INSPIRE CMD
@@ -88,7 +101,7 @@ async def on_message(message):
 
   #BOTINFO CMD
   if msg.startswith('!zen info'):
-    formattext = '**ℹ  __Info__  ℹ**\n \n ⏳ __*Date of start:*__ `2021 march 21st`\n 😊 __*Made with:*__ \n \n **Love, Replit and UptimeRobot \n __Lines of code: 143.__**'
+    formattext = '**`ℹ             Info              ℹ`**\n \n ⏳ __*Date of start:*__ ⌛ `2021 march 21st` \n \n 😊 **__*Made with:*__** \n **🤖 Love, Replit and UptimeRobot 🤖 \n 👩‍💻 __Lines of code: 145.__ 👩‍💻 \n \n`                                `**'
     await message.channel.send('>>> {}'.format(formattext))
 
 
@@ -100,7 +113,7 @@ async def on_message(message):
 
   #HELP CMD
   if msg.startswith("!zen help"):
-    helptext = '__**Commands:**__ \n 🌸 `!zen inspire` ** - sends an inspirational quote. ** \n ℹ `!zen info` ** - shows the info of the bot. ** \n ✉ `!zen invite` ** - sends an invite for the bot. ** \n 💝`!zen gift` ** - gifts love to someone you tag. ** \n 👤 `!zen better` ** - helps you become a better person. ** \n 🐶 `!zen doggo` ** -picture of cute doggos. ** \n ❤ `!zen encourage` ** -sends an inspirational encouragement**'
+    helptext = '__**Commands:**__ \n **__Utility__** \n 🌸 `!zen inspire` ** - sends an inspirational quote. ** \n 💝`!zen gift` ** - gifts love to someone you tag. ** \n ❤ `!zen encourage` ** -sends an inspirational encouragement** \n 🐶 `!zen doggo` ** -picture of cute doggos. ** \n 👤 `!zen better` ** - helps you become a better person. ** \n 💵 `!zen coinflip` ** - heads or tails, the bot decides! ** \n \n __**Others**__ \n ℹ `!zen info` ** - shows the info of the bot. ** \n ✉ `!zen invite` ** - sends an invite for the bot. **'
     await message.channel.send('>>> {}'.format(helptext))
   
 
@@ -123,13 +136,6 @@ async def on_message(message):
   if msg.startswith("!zen encourage"):
     await message.channel.send('>>> ❤ **-  ' + random.choice(encouragements) + '  -** ❤')
 
-
-  #MEME CMD
-  if msg.startswith("!zen meme"):
-    response = requests.get(url, headers=headers)
-    r= response.text
-    await message.channel.send(r)
-    #await message.channel.send(f">>> **{r['setup']}**\n||{r['punchline']}||")
 
 
   #COINFLIP CMD
