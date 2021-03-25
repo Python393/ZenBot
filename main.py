@@ -36,7 +36,7 @@ badwords = ['fuck', 'shit', 'fag', 'piss', 'dick', 'ass', 'bitch', 'bastard', 'n
 @client.event
 async def on_ready():
   print('Bot is online on {0.user}'.format(client))
-  game = discord.Game(f" on {len(client.guilds)} servers! | !zen help")
+  game = discord.Game(f"on {len(client.guilds)} servers! | !zen help")
   await client.change_presence(status=discord.Status.idle, activity=game)
 
 def get_quote():
@@ -113,7 +113,7 @@ async def on_message(message):
 
   #HELP CMD
   if msg.startswith("!zen help"):
-    helptext = '__**Commands:**__ \n **__Utility__** \n 🌸 `!zen inspire` ** - sends an inspirational quote. ** \n 💝`!zen gift` ** - gifts love to someone you tag. ** \n ❤ `!zen encourage` ** -sends an inspirational encouragement** \n 🐶 `!zen doggo` ** -picture of cute doggos. ** \n 👤 `!zen better` ** - helps you become a better person. ** \n 💵 `!zen coinflip` ** - heads or tails, the bot decides! ** \n \n __**Others**__ \n ℹ `!zen info` ** - shows the info of the bot. ** \n ✉ `!zen invite` ** - sends an invite for the bot. **'
+    helptext = '__**Commands:**__ \n **__Utility__** \n 🌸 `!zen inspire` ** - sends an inspirational quote. ** \n 💝`!zen gift` ** - gifts love to someone you tag. ** \n ❤ `!zen encourage` ** -sends an inspirational encouragement** \n 🐶 `!zen doggo` ** -picture of cute doggos. ** \n 👤 `!zen better` ** - helps you become a better person. ** \n 💵 `!zen coinflip` ** - heads or tails, the bot decides! ** \n \n __**Others**__ \n ℹ `!zen info` ** - shows the info of the bot. ** \n ✉ `!zen invite` ** - sends an invite for the bot. ** \n 💻 `!zen support` ** - shows the link for the support server ** \n ⬆ `!zen upvote` ** - shows the link to upvote this bot. **'
     await message.channel.send('>>> {}'.format(helptext))
   
 
@@ -142,6 +142,18 @@ async def on_message(message):
   if msg.startswith("!zen coinflip"):
     outcomes = ['Tails', 'Heads']
     await message.channel.send(f"> You got **{random.choice(outcomes)}**.")
+
+
+  
+  if msg.startswith('!zen upvote'):
+    await message.channel.send(f">>> {message.author.name}, we would be really happy if you would upvote our bot! 💝 \nhttps://discordbotlist.com/bots/zenbot/upvote")
+
+
+
+  if msg.startswith('!zen support'):
+    await message.channel.send(f">>> {message.author.name}, if you need support, join this server: \nhttps://discord.gg/afbrVCGSs5")
+
+
 
 
 #BOTONTIME
